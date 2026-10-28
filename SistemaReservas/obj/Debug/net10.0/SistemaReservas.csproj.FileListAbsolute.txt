@@ -1,0 +1,14 @@
+C:\Users\gabym\OneDrive\Documentos\faculdade\2ano\p00\proj\codigo\SistemaReservas\bin\Debug\net10.0\SistemaReservas.exe
+C:\Users\gabym\OneDrive\Documentos\faculdade\2ano\p00\proj\codigo\SistemaReservas\bin\Debug\net10.0\SistemaReservas.deps.json
+C:\Users\gabym\OneDrive\Documentos\faculdade\2ano\p00\proj\codigo\SistemaReservas\bin\Debug\net10.0\SistemaReservas.runtimeconfig.json
+C:\Users\gabym\OneDrive\Documentos\faculdade\2ano\p00\proj\codigo\SistemaReservas\bin\Debug\net10.0\SistemaReservas.dll
+C:\Users\gabym\OneDrive\Documentos\faculdade\2ano\p00\proj\codigo\SistemaReservas\bin\Debug\net10.0\SistemaReservas.pdb
+C:\Users\gabym\OneDrive\Documentos\faculdade\2ano\p00\proj\codigo\SistemaReservas\obj\Debug\net10.0\SistemaReservas.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\gabym\OneDrive\Documentos\faculdade\2ano\p00\proj\codigo\SistemaReservas\obj\Debug\net10.0\SistemaReservas.AssemblyInfoInputs.cache
+C:\Users\gabym\OneDrive\Documentos\faculdade\2ano\p00\proj\codigo\SistemaReservas\obj\Debug\net10.0\SistemaReservas.AssemblyInfo.cs
+C:\Users\gabym\OneDrive\Documentos\faculdade\2ano\p00\proj\codigo\SistemaReservas\obj\Debug\net10.0\SistemaReservas.csproj.CoreCompileInputs.cache
+C:\Users\gabym\OneDrive\Documentos\faculdade\2ano\p00\proj\codigo\SistemaReservas\obj\Debug\net10.0\SistemaReservas.dll
+C:\Users\gabym\OneDrive\Documentos\faculdade\2ano\p00\proj\codigo\SistemaReservas\obj\Debug\net10.0\refint\SistemaReservas.dll
+C:\Users\gabym\OneDrive\Documentos\faculdade\2ano\p00\proj\codigo\SistemaReservas\obj\Debug\net10.0\SistemaReservas.pdb
+C:\Users\gabym\OneDrive\Documentos\faculdade\2ano\p00\proj\codigo\SistemaReservas\obj\Debug\net10.0\SistemaReservas.genruntimeconfig.cache
+C:\Users\gabym\OneDrive\Documentos\faculdade\2ano\p00\proj\codigo\SistemaReservas\obj\Debug\net10.0\ref\SistemaReservas.dll
