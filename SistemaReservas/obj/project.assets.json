@@ -8,31 +8,24 @@
     "net10.0": []
   },
   "packageFolders": {
-    "C:\\Users\\gabym\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\tomas\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\gabym\\OneDrive\\Documentos\\faculdade\\2ano\\p00\\proj\\codigo\\SistemaReservas\\SistemaReservas.csproj",
+      "projectUniqueName": "C:\\Users\\tomas\\OneDrive\\Ambiente de Trabalho\\POO_\\SistemaReservas\\SistemaReservas.csproj",
       "projectName": "SistemaReservas",
-      "projectPath": "C:\\Users\\gabym\\OneDrive\\Documentos\\faculdade\\2ano\\p00\\proj\\codigo\\SistemaReservas\\SistemaReservas.csproj",
-      "packagesPath": "C:\\Users\\gabym\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\gabym\\OneDrive\\Documentos\\faculdade\\2ano\\p00\\proj\\codigo\\SistemaReservas\\obj\\",
+      "projectPath": "C:\\Users\\tomas\\OneDrive\\Ambiente de Trabalho\\POO_\\SistemaReservas\\SistemaReservas.csproj",
+      "packagesPath": "C:\\Users\\tomas\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\tomas\\OneDrive\\Ambiente de Trabalho\\POO_\\SistemaReservas\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\gabym\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\tomas\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
