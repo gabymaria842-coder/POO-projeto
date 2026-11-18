@@ -15,7 +15,7 @@ class EspacoDesportivo
     public int Capacidade { get; private set; }
     public string Estado { get; private set; } = "Disponível"; // "Disponível", "Ocupado" ou "Em manutenção"
 
-    private List<Equipamento> equipamentos;
+    private List<Equipamento> equipamentos; //add equipamento
 
     public EspacoDesportivo(int id, string nome, string tipo, string localizacao, int capacidade)
     {
