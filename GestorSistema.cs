@@ -1,17 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.Json;
 
-namespace GestaoEspacosDesportivos //foram feitas ligeiras alterações para ficar de acordo com o diagrama de classes 
+namespace GestaoEspacosDesportivos
 {
     public class GestorSistema
     {
-        // Listas com os nomes exatos do diagrama
         public List<Utilizador> listaUtilizadores { get; set; } = new List<Utilizador>();
         public List<EspacoDesportivo> listaEspacos { get; set; } = new List<EspacoDesportivo>();
         public List<Reserva> listaReservas { get; set; } = new List<Reserva>();
+
+        // Guarda quem tem sessão iniciada no momento (null se ninguém entrou)
+        public Utilizador utilizadorAtual = null;
 
         private const string FicheiroUtilizadores = "utilizadores.json";
         private const string FicheiroEspacos = "espacos.json";
@@ -19,7 +20,6 @@ namespace GestaoEspacosDesportivos //foram feitas ligeiras alterações para fic
 
         public GestorSistema()
         {
-            // Carrega os dados automaticamente assim que o gestor é criado
             CarregarDados();
         }
 
@@ -27,87 +27,148 @@ namespace GestaoEspacosDesportivos //foram feitas ligeiras alterações para fic
 
         public bool AdicionarUtilizador(Utilizador utilizador)
         {
+            if (utilizador == null)
+                return false;
+
             listaUtilizadores.Add(utilizador);
-            GuardarDados(); // Guarda logo no JSON
+            GuardarDados();
             Console.WriteLine("Utilizador adicionado com sucesso.");
+            return true;
+        }
+
+        // Registo com validação de campos e bloqueio de email duplicado
+        public bool RegistarUtilizador(Utilizador novoUtilizador)
+        {
+            if (novoUtilizador == null || novoUtilizador.Email == null || novoUtilizador.Email.Trim() == "")
+            {
+                Console.WriteLine("Erro: Dados de utilizador inválidos.");
+                return false;
+            }
+
+            foreach (Utilizador u in listaUtilizadores)
+            {
+                if (u.Email == novoUtilizador.Email)
+                {
+                    Console.WriteLine("Erro: Já existe um utilizador registado com este email.");
+                    return false;
+                }
+            }
+
+            listaUtilizadores.Add(novoUtilizador);
+            GuardarDados();
+            Console.WriteLine("Utilizador registado com sucesso.");
             return true;
         }
 
         public bool AdicionarEspaco(EspacoDesportivo espaco)
         {
+            if (espaco == null)
+                return false;
+
             listaEspacos.Add(espaco);
-            GuardarDados(); // Guarda logo no JSON
+            GuardarDados();
             Console.WriteLine("Espaço desportivo adicionado com sucesso.");
             return true;
         }
 
         public bool AdicionarReserva(Reserva reserva)
         {
+            if (reserva == null)
+                return false;
+
             listaReservas.Add(reserva);
-            GuardarDados(); // Guarda logo no JSON
+            GuardarDados();
             Console.WriteLine("Reserva adicionada com sucesso.");
             return true;
         }
 
-        // ---------- Remover (Com gravação automática) -------
+        // ---------- Remover (Com gravação automática) ----------
 
         public bool RemoverUtilizador(string id)
         {
-            Utilizador u = listaUtilizadores.Find(x => x.id == id);
-            if (u != null)
+            for (int i = 0; i < listaUtilizadores.Count; i++)
             {
-                listaUtilizadores.Remove(u);
-                GuardarDados(); // Atualiza o JSON
-                Console.WriteLine("Utilizador removido com sucesso.");
-                return true;
+                if (listaUtilizadores[i].Id == id)
+                {
+                    if (utilizadorAtual != null && utilizadorAtual.Id == listaUtilizadores[i].Id)
+                        utilizadorAtual = null;
+
+                    listaUtilizadores.RemoveAt(i);
+                    GuardarDados();
+                    Console.WriteLine("Utilizador removido com sucesso.");
+                    return true;
+                }
             }
             return false;
         }
 
-        public bool RemoverEspaco(string id)
+        public bool RemoverEspaco(int id)
         {
-            EspacoDesportivo e = listaEspacos.Find(x => x.id == id);
-            if (e != null)
+            for (int i = 0; i < listaEspacos.Count; i++)
             {
-                listaEspacos.Remove(e);
-                GuardarDados(); // Atualiza o JSON
-                Console.WriteLine("Espaço removido com sucesso.");
-                return true;
+                if (listaEspacos[i].Id == id)
+                {
+                    listaEspacos.RemoveAt(i);
+                    GuardarDados();
+                    Console.WriteLine("Espaço removido com sucesso.");
+                    return true;
+                }
             }
             return false;
         }
 
-        // ---------- Autenticação / Login (Essencial para a tua parte) ----------
+        // ---------- Login e Sessão ----------
 
         public Utilizador FazerLogin(string email, string password)
         {
-            // Procura o utilizador pelo email e password
-            Utilizador user = listaUtilizadores.FirstOrDefault(u => u.email == email && u.password == password);
-
-            if (user != null)
+            if (email == "" || password == "")
             {
-                Console.WriteLine($"Login bem-sucedido! Bem-vindo, {user.nome}");
-                return user;
+                Console.WriteLine("Erro: Preencha o email e a password.");
+                utilizadorAtual = null;
+                return null;
             }
 
+            foreach (Utilizador u in listaUtilizadores)
+            {
+                if (u.Email == email && u.Password == password)
+                {
+                    utilizadorAtual = u;
+                    Console.WriteLine("Login bem-sucedido! Bem-vindo, " + u.Nome);
+                    return u;
+                }
+            }
+
+            utilizadorAtual = null;
             Console.WriteLine("Erro: Email ou password incorretos.");
             return null;
         }
 
-        // ---------- Persistência em ficheiros (Corrigido com Indentação) ----------
+        public void TerminarSessao()
+        {
+            utilizadorAtual = null;
+            Console.WriteLine("Sessão terminada.");
+        }
+
+        public bool UtilizadorAtualAdmin()
+        {
+            if (utilizadorAtual != null && utilizadorAtual.Perfil == "ADMIN")
+            {
+                return true;
+            }
+            return false;
+        }
+
+        // ---------- Persistência em ficheiros ----------
 
         public void GuardarDados()
         {
             try
             {
-                var opcoes = new JsonSerializerOptions { WriteIndented = true }; // Identação ativada!
+                var opcoes = new JsonSerializerOptions { WriteIndented = true };
 
-                
                 File.WriteAllText(FicheiroUtilizadores, JsonSerializer.Serialize(listaUtilizadores, opcoes));
                 File.WriteAllText(FicheiroEspacos, JsonSerializer.Serialize(listaEspacos, opcoes));
                 File.WriteAllText(FicheiroReservas, JsonSerializer.Serialize(listaReservas, opcoes));
-                
-                
             }
             catch (Exception ex)
             {
@@ -122,19 +183,25 @@ namespace GestaoEspacosDesportivos //foram feitas ligeiras alterações para fic
                 if (File.Exists(FicheiroUtilizadores))
                 {
                     string json = File.ReadAllText(FicheiroUtilizadores);
-                    listaUtilizadores = JsonSerializer.Deserialize<List<Utilizador>>(json) ?? new List<Utilizador>();
+                    List<Utilizador> dados = JsonSerializer.Deserialize<List<Utilizador>>(json);
+                    if (dados != null)
+                        listaUtilizadores = dados;
                 }
 
                 if (File.Exists(FicheiroEspacos))
                 {
                     string json = File.ReadAllText(FicheiroEspacos);
-                    listaEspacos = JsonSerializer.Deserialize<List<EspacoDesportivo>>(json) ?? new List<EspacoDesportivo>();
+                    List<EspacoDesportivo> dados = JsonSerializer.Deserialize<List<EspacoDesportivo>>(json);
+                    if (dados != null)
+                        listaEspacos = dados;
                 }
 
                 if (File.Exists(FicheiroReservas))
                 {
                     string json = File.ReadAllText(FicheiroReservas);
-                    listaReservas = JsonSerializer.Deserialize<List<Reserva>>(json) ?? new List<Reserva>();
+                    List<Reserva> dados = JsonSerializer.Deserialize<List<Reserva>>(json);
+                    if (dados != null)
+                        listaReservas = dados;
                 }
             }
             catch (Exception ex)

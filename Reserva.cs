@@ -10,15 +10,20 @@ public enum EstadoReserva
 
 public class Reserva
 {
-    public int Id { get; private set; }
-    public DateTime Data { get; private set; }
-    public TimeSpan HoraInicio { get; private set; }
-    public TimeSpan HoraFim { get; private set; }
-    public EstadoReserva Estado { get; private set; }
-    
+    public int Id { get; set; }
+    public DateTime Data { get; set; }
+    public TimeSpan HoraInicio { get; set; }
+    public TimeSpan HoraFim { get; set; }
+    public EstadoReserva Estado { get; set; }
+
     // Associações indicadas no Diagrama de Classes:
-    public UtilizadorNormal Utilizador { get; private set; }
-    public EspacoDesportivo Espaco { get; private set; }
+    public UtilizadorNormal Utilizador { get; set; }
+    public EspacoDesportivo Espaco { get; set; }
+
+    // Construtor vazio necessário para a leitura do JSON
+    public Reserva()
+    {
+    }
 
     // Construtor atualizado que recebe o UtilizadorNormal e o EspacoDesportivo
     public Reserva(int id, DateTime data, TimeSpan horaInicio, TimeSpan horaFim, UtilizadorNormal utilizador, EspacoDesportivo espaco)
@@ -48,7 +53,7 @@ public class Reserva
 
     public override string ToString()
     {
-        string nomeUtilizador = Utilizador != null ? Utilizador.nome : "Desconhecido";
+        string nomeUtilizador = Utilizador != null ? Utilizador.Nome : "Desconhecido";
         string nomeEspaco = Espaco != null ? Espaco.Nome : "Desconhecido";
 
         return $"[Reserva #{Id}] Espaço: {nomeEspaco} | Data: {Data:yyyy-MM-dd} | Horário: {HoraInicio} - {HoraFim} | Estado: {Estado} | Utilizador: {nomeUtilizador}";

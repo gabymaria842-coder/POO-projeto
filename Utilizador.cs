@@ -1,16 +1,19 @@
 using System;
 
-//classes utilizador (herança)(subclass UtilizadorNormal & Administrador)
-
-public class utilizador
+public class Utilizador
 {
-    public string id {get;  private  set;}
-    public string nome {get; private set;}
-    public string email {get; private set;}
-    public string perfil {get;  private set;}
-    public string password {get; private set;}
+    public string Id { get; set; }
+    public string Nome { get; set; }
+    public string Email { get; set; }
+    public string Perfil { get; set; }
+    public string Password { get; set; }
 
-    public Utilizador(string id, string nome, string email, string password, string perfil) 
+    // Construtor vazio normal (usado automaticamente ao ler o JSON)
+    public Utilizador()
+    {
+    }
+
+    public Utilizador(string id, string nome, string email, string password, string perfil)
     {
         Id = id;
         Nome = nome;
@@ -18,8 +21,8 @@ public class utilizador
         Password = password;
         Perfil = perfil;
     }
-    
-    public Utilizador(string email, string password) //só recebe email e passwords
+
+    public Utilizador(string email, string password) // só recebe email e password
     {
         Id = "00";
         Nome = "Utilizador Temporário";
@@ -28,33 +31,33 @@ public class utilizador
         Perfil = "NORMAL";
     }
 
-    public void Set_Nome(string NovoNome) //apenas para mudar o nome do utilizador
+    public void Set_Nome(string novoNome)
     {
         Nome = novoNome;
-        Console.WriteLine($"Perfil atualizado para o novo nome: {Nome}");//é para mostrar o nome novo 
+        Console.WriteLine($"Perfil atualizado para o novo nome: {Nome}");
     }
 
-    public void set_Password(string novaPassword) 
+    public void Set_Password(string novaPassword)
     {
         Password = novaPassword;
-        Console.WriteLine("Perfil e password atualizados com sucesso para!"); //aqui nao mostra a pass nova para mostrar é {this.password}
+        Console.WriteLine("Password atualizada com sucesso!");
     }
 
-    public void Set_Email(string novoEmail) 
+    public void Set_Email(string novoEmail)
     {
-        if (novoEmail.Contains("@")) // validação 
+        if (novoEmail != "" && novoEmail.Contains("@"))
         {
-            this.email = novoEmail;
-            Console.WriteLine($"Email atualizado para: {novoEmail}");
+            Email = novoEmail;
+            Console.WriteLine($"Email atualizado para: {Email}");
+        }
+        else
+        {
+            Console.WriteLine("Email inválido.");
         }
     }
 
-
-    public bool Autenticar(string emailInput, string passInput) 
+    public bool Autenticar(string emailInput, string passInput)
     {
-        return email == emailInput && password == passInput; 
+        return Email == emailInput && Password == passInput;
     }
-
-
-
 }

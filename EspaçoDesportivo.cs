@@ -4,18 +4,24 @@ using System.Collections.Generic;
 /// <summary>
 /// Campo, court ou pavilhão.
 /// Relação de COMPOSIÇÃO com Equipamento: os equipamentos são criados dentro do
-/// espaço (como o Emprestimo cria o Membro e o Item) e só existem através dele.
+/// espaço e só existem através dele.
 /// </summary>
-class EspacoDesportivo
+public class EspacoDesportivo
 {
-    public int Id { get; private set; }
-    public string Nome { get; private set; } = "";
-    public string Tipo { get; private set; } = "";        // ex.: "Campo de futebol", "Court de ténis", "Pavilhão"
-    public string Localizacao { get; private set; } = "";
-    public int Capacidade { get; private set; }
-    public string Estado { get; private set; } = "Disponível"; // "Disponível", "Ocupado" ou "Em manutenção"
+    public int Id { get; set; }
+    public string Nome { get; set; } = "";
+    public string Tipo { get; set; } = "";        // ex.: "Campo de futebol", "Court de ténis", "Pavilhão"
+    public string Localizacao { get; set; } = "";
+    public int Capacidade { get; set; }
+    public string Estado { get; set; } = "Disponível"; // "Disponível", "Ocupado" ou "Em manutenção"
 
-    private List<Equipamento> equipamentos; //add equipamento
+    // Propriedade pública para o JSON guardar e carregar os equipamentos
+    public List<Equipamento> Equipamentos { get; set; } = new List<Equipamento>();
+
+    // Construtor vazio necessário para a leitura do JSON
+    public EspacoDesportivo()
+    {
+    }
 
     public EspacoDesportivo(int id, string nome, string tipo, string localizacao, int capacidade)
     {
@@ -25,9 +31,7 @@ class EspacoDesportivo
         Localizacao = localizacao;
         Capacidade = capacidade;
         Estado = "Disponível";
-
-        // Composição: a lista nasce e vive dentro do espaço
-        equipamentos = new List<Equipamento>();
+        Equipamentos = new List<Equipamento>();
     }
 
     public void SetEstado(string estado)
@@ -50,37 +54,37 @@ class EspacoDesportivo
     // O equipamento é criado dentro do espaço (composição)
     public void AdicionarEquipamento(int id, string nome, int quantidade, string estadoConservacao)
     {
-        if (equipamentos.Exists(e => e.Id == id))
+        if (Equipamentos.Exists(e => e.Id == id))
         {
             Console.WriteLine($"Já existe um equipamento com o ID {id}.");
             return;
         }
-        equipamentos.Add(new Equipamento(id, nome, quantidade, estadoConservacao));
+        Equipamentos.Add(new Equipamento(id, nome, quantidade, estadoConservacao));
     }
 
     public bool RemoverEquipamento(int id)
     {
-        return equipamentos.RemoveAll(e => e.Id == id) > 0;
+        return Equipamentos.RemoveAll(e => e.Id == id) > 0;
     }
 
-    public Equipamento? ObterEquipamento(int id)
+    public Equipamento ObterEquipamento(int id)
     {
-        return equipamentos.Find(e => e.Id == id);
+        return Equipamentos.Find(e => e.Id == id);
     }
 
     public int GetNumeroEquipamentos()
     {
-        return equipamentos.Count;
+        return Equipamentos.Count;
     }
 
     public void ListarEquipamentos()
     {
-        if (equipamentos.Count == 0)
+        if (Equipamentos.Count == 0)
         {
             Console.WriteLine("  (sem equipamentos)");
             return;
         }
-        foreach (var e in equipamentos)
+        foreach (Equipamento e in Equipamentos)
         {
             Console.WriteLine("  " + e);
         }

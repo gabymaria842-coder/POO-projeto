@@ -3,12 +3,17 @@ using System;
 /// <summary>
 /// Material associado a um espaço desportivo (bolas, redes, coletes, etc.).
 /// </summary>
-class Equipamento
+public class Equipamento
 {
-    public int Id { get; private set; }
-    public string Nome { get; private set; } = "";
-    public int Quantidade { get; private set; }
-    public string EstadoConservacao { get; private set; } = ""; // "Novo", "Bom", "Usado" ou "Danificado"
+    public int Id { get; set; }
+    public string Nome { get; set; } = "";
+    public int Quantidade { get; set; }
+    public string EstadoConservacao { get; set; } = ""; // "Novo", "Bom", "Usado" ou "Danificado"
+
+    // Construtor vazio necessário para a leitura do JSON
+    public Equipamento()
+    {
+    }
 
     public Equipamento(int id, string nome, int quantidade, string estadoConservacao)
     {
